@@ -2,7 +2,6 @@
  * Created by Mefisto on 11-Jun-17.
  */
 import {Component} from '@angular/core';
-import {forEach} from '@angular/router/src/utils/collection';
 
 enum Turn {
   First = 0,
@@ -41,6 +40,10 @@ export class TicTacToeComponent {
     return Array(this._size);
   }
 
+  /**
+   * Getter to display current player turn.
+   * @returns Red, Blue or empty string
+   */
   get currentPlayerTurn(): string {
     if (this.playerTurn === Turn.First) {
       return 'Red';
@@ -51,6 +54,9 @@ export class TicTacToeComponent {
     }
   }
 
+  /**
+   * Reset board to default by creating empty matrix of cells.
+   */
   reset(): void {
     this.cells = Array(this._size).fill([]);
     for (let i = 0; i < this._size; i++) {
@@ -60,25 +66,34 @@ export class TicTacToeComponent {
     this.playerTurn = Turn.First;
   }
 
+  /**
+   * Cell clicking event. If possible, make player move, switch turn and check if there is a winner.
+   * @param i
+   * @param j
+   */
   cellClicked(i: number, j: number): void {
-    // Set new set context
-    if (this.cells[i][j] === Cell.Clear && this.winner === '') {
+    if (this.cells[i][j] === Cell.Clear && this.winner === '') {  // Set new set context
       if (this.playerTurn === Turn.First) {
         this.cells[i][j] = Cell.Cross;
         this.playerTurn = Turn.Second;
-      } else {
+      } else if (this.playerTurn === Turn.Second) {
         this.cells[i][j] = Cell.Circle;
         this.playerTurn = Turn.First;
       }
 
-      // Check end of game if there is winner
-      if (this.checkWinner()) {
+      if (this.checkWinner()) {  // Check end of game if there is winner
         this.winner = this.playerTurn === Turn.First ? 'Blue' : 'Red';
         this.playerTurn = Turn.None;
       }
     }
   }
 
+  /**
+   * Function binding correct image to each cell
+   * @param i
+   * @param j
+   * @returns {string} path to image
+   */
   getImage(i: number, j: number): string {
     if (this.cells[i][j] === Cell.Cross) {
       return this.imagePathCross;
@@ -89,6 +104,10 @@ export class TicTacToeComponent {
     }
   }
 
+  /**
+   * Check if there is sequence of 5 symbols of one kind in any direction.
+   * @returns {boolean} true if sequence exists
+   */
   checkWinner(): boolean {
     let counterCircle: number;
     let counterCross: number;
@@ -178,9 +197,5 @@ export class TicTacToeComponent {
     }
 
     return false;
-  }
-
-  test(): void {
-    console.log(this.checkWinner());
   }
 }

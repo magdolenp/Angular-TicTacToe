@@ -24,19 +24,19 @@ enum Cell {
 export class TicTacToeComponent {
   title = 'TIC TAC TOE';
   _size = 5;
-  winCondition = 5;
+  winCondition = 5; // review
   playerTurn: Turn;
   cells: Cell[][];
   imagePath = '//:0';
   imagePathCross = 'assets/cross.png';
-  imagePathCircle = 'assets/circle.png';
+  imagePathCircle = 'assets/circle.png'; // review
   winner: string;
 
   constructor() {
     this.reset()
   }
 
-  get size(): number[] {
+  get size(): number[] { // review
     return Array(this._size);
   }
 
@@ -52,7 +52,7 @@ export class TicTacToeComponent {
     } else {
       return '';
     }
-  }
+  } // review
 
   /**
    * Reset board to default by creating empty matrix of cells.
@@ -61,7 +61,7 @@ export class TicTacToeComponent {
     this.cells = Array(this._size).fill([]);
     for (let i = 0; i < this._size; i++) {
       this.cells[i] = Array(this._size).fill(Cell.Clear);
-    }
+    } // review
     this.winner = '';
     this.playerTurn = Turn.First;
   }
@@ -79,7 +79,7 @@ export class TicTacToeComponent {
       } else if (this.playerTurn === Turn.Second) {
         this.cells[i][j] = Cell.Circle;
         this.playerTurn = Turn.First;
-      }
+      } // review
 
       if (this.checkWinner()) {  // Check end of game if there is winner
         this.winner = this.playerTurn === Turn.First ? 'Blue' : 'Red';
@@ -141,7 +141,7 @@ export class TicTacToeComponent {
     }
 
     // Diagonals: top-left to bottom-right
-    for (let rowStart = 0; rowStart < this._size - 4; rowStart++) {
+    for (let rowStart = 0; rowStart < this._size - 4; rowStart++) { // review
       counterCircle = 0;
       counterCross = 0;
       for (let row = rowStart, col = 0; row < this._size && col < this._size; row++, col++) {

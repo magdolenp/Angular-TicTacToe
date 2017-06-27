@@ -1,19 +1,19 @@
 <div>
   <h1>{{title}}</h1>
-  <p>First player who creates horizontal, vertical, or diagonal row of 5 symbols wins!</p> <!-- review -->
-  <label>Size:
+  <p>First player who creates horizontal, vertical, or diagonal row of {{winCondition}} symbols wins!</p>
+  <p>Size:
     <input type="range" min="5" max="20" value="5" [(ngModel)]="_size">
     {{_size}}
-  </label>
+  </p>
   <button (click)="reset()">Reset</button>
-  <label>Turn: <span class="bluePlayer" [ngClass]="{'redPlayer':playerTurn===0}">{{currentPlayerTurn}}</span></label> <!-- review -->
-  <label>Winner: {{winner}}</label>
+  <p>Turn: <span class="bluePlayer" [ngClass]="{'redPlayer':playerTurn===0}">{{currentPlayerTurn}}</span></p> <!-- review -->
+  <p>Winner: {{winner}}</p>
 
   <table class="gameTable">
     <tr class="gameRow" *ngFor="let row of cells; let i = index">
       <td *ngFor="let cell of row; let j = index"
           (click)="cellClicked(i, j)" class="gameCell">
-        <img [src]="getImage(i, j)" /> <!-- review -->
+        <img [src]="getImage(cell)" /> <!-- review -->
       </td>
     </tr>
   </table>

@@ -1,13 +1,9 @@
+$game-cell-bg: #FAFAFA;
+
 h1 {
   color: #369;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 250%;
-}
-
-h2, h3 { // review
-  color: #444;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: lighter;
 }
 
 body { // review
@@ -16,27 +12,25 @@ body { // review
 
 body, input[text], button {
   color: #888;
-  font-family: Cambria, Georgia; // review
+  font-family: Cambria, Georgia, sans-serif;
 }
 
 button {
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   background-color: #eee;
   border: none;
   padding: 5px 10px;
   border-radius: 4px;
   cursor: hand;
+  &:hover {
+    background-color: #cfd8dc;
+  }
+  &:disabled {
+    background-color: #eee;
+    color: #aaa;
+    cursor: auto;
+  }
 }
-
-button:hover {
-  background-color: #cfd8dc;
-}
-
-button:disabled {
-  background-color: #eee;
-  color: #aaa;
-  cursor: auto;
-} // review
 
 * {
   font-family: Arial, Helvetica, sans-serif;
@@ -52,12 +46,9 @@ button:disabled {
 .gameCell {
   border: 1px solid #CCC;
   height: 30px;
-}
-
-.gameCell {
-  background: #FAFAFA; // review
+  background: $game-cell-bg;
   text-align: center;
-} // review
+}
 
 /* Cells in even rows (2,4,6...) are one color */
 .gameRow:nth-child(even) .gameCell {
@@ -72,7 +63,6 @@ button:disabled {
 /* Hover cell effect! */
 .gameCell:hover {
   background: #666 !important;
-  color: #FFF; // review
 }
 
 img {

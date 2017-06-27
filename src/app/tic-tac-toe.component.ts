@@ -3,6 +3,9 @@
  */
 import {Component} from '@angular/core';
 
+const IMAGE_PATH_CROSS = 'assets/cross.png';
+const IMAGE_PATH_CIRCLE = 'assets/circle.png'; // review
+
 enum Turn {
   First = 0,
   Second,
@@ -24,20 +27,15 @@ enum Cell {
 export class TicTacToeComponent {
   title = 'TIC TAC TOE';
   _size = 5;
-  winCondition = 5; // review
+  readonly winCondition = 5;
   playerTurn: Turn;
   cells: Cell[][];
   imagePath = '//:0';
-  imagePathCross = 'assets/cross.png';
-  imagePathCircle = 'assets/circle.png'; // review
+
   winner: string;
 
   constructor() {
     this.reset()
-  }
-
-  get size(): number[] { // review
-    return Array(this._size);
   }
 
   /**
@@ -45,14 +43,18 @@ export class TicTacToeComponent {
    * @returns Red, Blue or empty string
    */
   get currentPlayerTurn(): string {
-    if (this.playerTurn === Turn.First) {
-      return 'Red';
-    } else if (this.playerTurn === Turn.Second) {
-      return 'Blue';
-    } else {
-      return '';
+    switch (this.playerTurn) {
+      case Turn.First: {
+        return 'Red';
+      }
+      case Turn.Second: {
+        return 'Blue';
+      }
+      default: {
+        return '';
+      }
     }
-  } // review
+  }
 
   /**
    * Reset board to default by creating empty matrix of cells.
@@ -62,6 +64,7 @@ export class TicTacToeComponent {
     for (let i = 0; i < this._size; i++) {
       this.cells[i] = Array(this._size).fill(Cell.Clear);
     } // review
+    // this.cells = Array(this._size).fill(Array(this._size).fill(Cell.Clear));
     this.winner = '';
     this.playerTurn = Turn.First;
   }
@@ -72,6 +75,7 @@ export class TicTacToeComponent {
    * @param j
    */
   cellClicked(i: number, j: number): void {
+    console.log(i, j, this.cells[i][j]);
     if (this.cells[i][j] === Cell.Clear && this.winner === '') {  // Set new set context
       if (this.playerTurn === Turn.First) {
         this.cells[i][j] = Cell.Cross;
@@ -81,6 +85,7 @@ export class TicTacToeComponent {
         this.playerTurn = Turn.First;
       } // review
 
+      console.log(this.cells);
       if (this.checkWinner()) {  // Check end of game if there is winner
         this.winner = this.playerTurn === Turn.First ? 'Blue' : 'Red';
         this.playerTurn = Turn.None;
@@ -90,17 +95,20 @@ export class TicTacToeComponent {
 
   /**
    * Function binding correct image to each cell
-   * @param i
-   * @param j
+   * @param cell
    * @returns {string} path to image
    */
-  getImage(i: number, j: number): string {
-    if (this.cells[i][j] === Cell.Cross) {
-      return this.imagePathCross;
-    } else if (this.cells[i][j] === Cell.Circle) {
-      return this.imagePathCircle;
-    } else {
-      return this.imagePath;
+  getImage(cell: Cell): string {
+    switch (cell) {
+      case Cell.Cross: {
+        return IMAGE_PATH_CROSS;
+      }
+      case Cell.Circle: {
+        return IMAGE_PATH_CIRCLE;
+      }
+      default: {
+        return this.imagePath;
+      }
     }
   }
 

@@ -44,8 +44,9 @@ button {
 }
 
 .gameCell {
+  width: 55px;
+  height: 55px;
   border: 1px solid #CCC;
-  height: 30px;
   background: $game-cell-bg;
   text-align: center;
 }

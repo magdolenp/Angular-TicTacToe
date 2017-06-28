@@ -1,7 +1,7 @@
 /**
  * Created by Mefisto on 11-Jun-17.
  */
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 const IMAGE_PATH_CROSS = 'assets/cross.png';
 const IMAGE_PATH_CIRCLE = 'assets/circle.png'; // review
@@ -25,6 +25,7 @@ enum Cell {
 })
 
 export class TicTacToeComponent {
+  readonly turnEnum = Turn;
   title = 'TIC TAC TOE';
   _size = 5;
   readonly winCondition = 5;
@@ -44,15 +45,12 @@ export class TicTacToeComponent {
    */
   get currentPlayerTurn(): string {
     switch (this.playerTurn) {
-      case Turn.First: {
+      case Turn.First:
         return 'Red';
-      }
-      case Turn.Second: {
+      case Turn.Second:
         return 'Blue';
-      }
-      default: {
+      default:
         return '';
-      }
     }
   }
 
@@ -60,11 +58,7 @@ export class TicTacToeComponent {
    * Reset board to default by creating empty matrix of cells.
    */
   reset(): void {
-    this.cells = Array(this._size).fill([]);
-    for (let i = 0; i < this._size; i++) {
-      this.cells[i] = Array(this._size).fill(Cell.Clear);
-    } // review
-    // this.cells = Array(this._size).fill(Array(this._size).fill(Cell.Clear));
+    this.cells = Array(this._size).fill(null).map(() => Array(this._size).fill(Cell.Clear));
     this.winner = '';
     this.playerTurn = Turn.First;
   }
@@ -75,7 +69,6 @@ export class TicTacToeComponent {
    * @param j
    */
   cellClicked(i: number, j: number): void {
-    console.log(i, j, this.cells[i][j]);
     if (this.cells[i][j] === Cell.Clear && this.winner === '') {  // Set new set context
       if (this.playerTurn === Turn.First) {
         this.cells[i][j] = Cell.Cross;
@@ -85,7 +78,6 @@ export class TicTacToeComponent {
         this.playerTurn = Turn.First;
       } // review
 
-      console.log(this.cells);
       if (this.checkWinner()) {  // Check end of game if there is winner
         this.winner = this.playerTurn === Turn.First ? 'Blue' : 'Red';
         this.playerTurn = Turn.None;
@@ -99,17 +91,7 @@ export class TicTacToeComponent {
    * @returns {string} path to image
    */
   getImage(cell: Cell): string {
-    switch (cell) {
-      case Cell.Cross: {
-        return IMAGE_PATH_CROSS;
-      }
-      case Cell.Circle: {
-        return IMAGE_PATH_CIRCLE;
-      }
-      default: {
-        return this.imagePath;
-      }
-    }
+    return cell === Cell.Cross ? IMAGE_PATH_CROSS : IMAGE_PATH_CIRCLE;
   }
 
   /**

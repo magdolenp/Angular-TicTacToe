@@ -13,7 +13,7 @@
     <tr class="gameRow" *ngFor="let row of cells; let i = index">
       <td *ngFor="let cell of row; let j = index"
           (click)="cellClicked(i, j)" class="gameCell">
-        <img [src]="getImage(cell)" /> <!-- review -->
+        <img *ngIf="cell" [src]="getImage(cell)" />
       </td>
     </tr>
   </table>
